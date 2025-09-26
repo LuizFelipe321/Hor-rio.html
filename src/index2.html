@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CorDeFundo</title>
+    
+    <link id="favicon" rel="icon" type="image/png" href="">
+    <style>
+        #titulo {
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                color: #FFD700;
+            }
+            100% {
+                color: #FF8C00;
+            }
+        }
+
+        body {
+            transition: background-color 1s;
+            font-family: Arial, sans-serif;
+            color: black;
+            text-align: center;
+            padding-top: 70px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 35px;
+                padding-top: 50px;
+            }
+
+            button {
+                font-size: 35px; 
+                padding-top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="titulo">Bem-vindo(a)!</h1>
+    <p>Clique no botão para mudar a cor da página de acordo com o horário atual.</p>
+    <button onclick="mudar()">Mudar cor</button>
+
+    <p id="relogio"></p>
+    <p id="mensagem"></p>
+
+    <script>
+        function mudar() {
+            const hora = new Date().getHours();
+            let cor, mensagem, imagemDeFundo, musica, favicon;
+
+            if (hora >= 6 && hora < 12) {
+                cor = "#FFD700";
+                mensagem = "Bom dia!";
+                imagemDeFundo = "url('https://images.unsplash.com/photo-1547743198-03b62a4a33f3')";
+                favicon = "https://img.icons8.com/ios/452/sun.png";
+                musica = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; 
+            } else if (hora >= 12 && hora < 18) {
+                cor = "#FF8C00";
+                mensagem = "Boa tarde!";
+                imagemDeFundo = "url('https://images.unsplash.com/photo-1522252234-7037a2cb2be3')";
+                favicon = "https://img.icons8.com/ios/452/sun.png"; 
+                musica = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
+            } else if (hora >= 18 && hora < 23) {
+                cor = "#1E90FF";
+                mensagem = "Boa noite!";
+                imagemDeFundo = "url('https://images.unsplash.com/photo-1442962248483-13d4b6c30e47')";
+                favicon = "https://img.icons8.com/ios/452/moon.png"; 
+                musica = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3";
+            } else {
+                cor = "#2F4F4F";
+                mensagem = "Hora de descansar!";
+                imagemDeFundo = "url('https://images.unsplash.com/photo-1504245448121-8d68a8ed93f9')";
+                favicon = "https://img.icons8.com/ios/452/moon.png";
+                musica = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"; 
+            }
+
+            document.body.style.backgroundColor = cor;
+            document.body.style.backgroundImage = imagemDeFundo;
+            document.getElementById("titulo").innerHTML = mensagem;
+
+            document.getElementById("favicon").href = favicon;
+
+            const audio = new Audio(musica);
+            audio.loop = true; 
+            audio.play();
+
+            setInterval(function() {
+                const agora = new Date();
+                const horaAtual = agora.getHours().toString().padStart(2, '0');
+                const minutos = agora.getMinutes().toString().padStart(2, '0');
+                const segundos = agora.getSeconds().toString().padStart(2, '0');
+                document.getElementById("relogio").innerText = `Horário atual: ${horaAtual}:${minutos}:${segundos}`;
+            }, 1000); 
+
+            const mensagemMotivacional = document.getElementById("mensagem");
+            if (hora >= 6 && hora < 12) {
+                mensagemMotivacional.innerText = "Comece o dia com um sorriso! 😁";
+            } else if (hora >= 12 && hora < 18) {
+                mensagemMotivacional.innerText = "Faça a tarde valer a pena! 💪";
+            } else if (hora >= 18 && hora < 23) {
+                mensagemMotivacional.innerText = "Aproveite a noite para relaxar. 🌙";
+            } else {
+                mensagemMotivacional.innerText = "Durma bem e sonhe grande! 😴";
+            }
+        }
+        
+         function toggleTheme() {
+    const body = document.body;
+    body.classList.toggle("dark-theme"); 
+    document.querySelector('.container').classList.toggle('dark-theme'); 
+  }
+  
+   if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker registrado"))
+      .catch(err => console.log("Erro no SW:", err));
+  }
+  
+    </script>
+</body>
+</html>
